@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import Text from './Text';
+import { View, Image, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
@@ -57,6 +58,7 @@ const styles = StyleSheet.create({
     },
 });
 
+// Makes numbers over 1000 or 1000 to show one decimal accurate to k
 const formatCount = (count) => {
     if (count >= 1000) {
         return (count / 1000).toFixed(1) + 'k';
