@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   },
 });
 
+//Validation for inputs
 const validationSchema = yup.object().shape({
     username: yup
     .string()
@@ -46,6 +47,7 @@ const validationSchema = yup.object().shape({
     .required('Password is required')
 })
 
+//formik init
 const SignIn = () => {
   const formik = useFormik({
     initialValues: {

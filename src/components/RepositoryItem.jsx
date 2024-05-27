@@ -70,7 +70,7 @@ const RepositoryItem = ({ item }) => {
     return (
         <View style={styles.container}>
             <View style={styles.topContainer}>
-                <Image style={styles.image} source={{ uri: item.ownerAvatarUrl }} />
+                <Image style={styles.image} source={{ uri: item.ownerAvatarUrl }}  onError={(e) => console.log('Error loading image', e.nativeEvent.error)} />
                 <View style={styles.infoContainer}>
                     <Text style={styles.name}>{item.fullName}</Text>
                     <Text style={styles.description}>{item.description}</Text>
