@@ -2,6 +2,7 @@ import Text from "./Text";
 import { View, TextInput, Pressable, StyleSheet } from "react-native";
 import { useFormik } from "formik";
 import * as yup from 'yup';
+import useSignIn from "../hooks/useSignIn";
 
 const styles = StyleSheet.create({
   container: {
@@ -49,15 +50,31 @@ const validationSchema = yup.object().shape({
 
 //formik init
 const SignIn = () => {
+  //get func from useSignIn hook
+  const [ signIn ] = useSignIn();
+
+  //Form submit
+  const onSubmit = async (values) => {
+    //destruckt fields
+    const { username, password } = values;
+
+    //get authenticate from data that signIn returns
+    try {
+      const { authenticate } = await signIn({ username, password });
+      console.log('cred data', authenticate.accessToken)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  //formik setup
   const formik = useFormik({
     initialValues: {
       username: "",
       password: "",
     },
     validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-    },
+    onSubmit: onSubmit,
   });
 
   return (
@@ -69,6 +86,7 @@ const SignIn = () => {
         onChangeText={formik.handleChange("username")}
         onBlur={formik.handleBlur('username')}
       />
+      {/*If input field is used and error occurs, shows errors from validschema */}
       {formik.touched.username && formik.errors.username && (
         <Text style={{ color: 'red' }}>{formik.errors.username}</Text>
       )}
@@ -80,6 +98,7 @@ const SignIn = () => {
         onBlur={formik.handleBlur('password')}
         secureTextEntry
       />
+      {/*If input field is used and error occurs, shows errors from validschema */}
       {formik.touched.password && formik.errors.password && (
         <Text style={{ color: 'red' }}>{formik.errors.password}</Text>
       )}
